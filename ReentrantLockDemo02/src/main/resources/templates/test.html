@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <meta charset="UTF-8">
+  <title>测试可重入锁</title>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="/js/common.js"></script>
+</head>
+<body style="margin-right: 10%; margin-left: 10%">
+<div class="container-fluid ">
+  <!--导航栏-->
+  <div class="row">
+    <div class="col-md-6">
+      <ul class="nav nav-pills">
+        <button type="button" id="btnTable1" class="btn btn-default navbar-btn" th:onclick="func([[1]])">功能1</button>
+      </ul>
+      <ul class="nav nav-pills">
+        <button type="button" id="btnTable2" class="btn btn-default navbar-btn" th:onclick="func([[2]])">功能2</button>
+      </ul>
+    </div>
+    <div class="col-md-6" >
+      <ul class="nav nav-pills" style="float: right">
+        <li id="logoutBtn" role="presentation"><a>退出</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+<script type="text/javascript" language="javascript">
+  function func(code){
+    $.ajax({
+      url:"/test/"+code,
+      type:"get",
+      cache:false,
+      dataType:"text",
+      async:false,
+      // beforeSend: function (XMLHttpRequest) {
+      //   XMLHttpRequest.setRequestHeader("Authorization", localStorage.getItem("token"));
+      // },
+      success:function(result){
+        if(result==="success"){
+          window.alert(code+"成功！")
+        }else{
+          window.alert(code+"失败！")
+        }
+      }
+    })
+  }
+</script>
